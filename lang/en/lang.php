@@ -1,2 +1,2 @@
 <?php
-$lang['completechemlist'] = 'Complete_weighed-in_chemicals';
+$lang['completechemlist'] = 'Autocomplete weighed-in chemicals';

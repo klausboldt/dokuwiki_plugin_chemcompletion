@@ -1,2 +1,2 @@
 <?php
-$lang['completechemlist'] = 'Vervollständige_eingewogene_Chemikalien';
+$lang['completechemlist'] = 'Vervollständige eingewogene Chemikalien';
