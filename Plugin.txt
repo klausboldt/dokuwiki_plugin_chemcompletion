@@ -1,0 +1,45 @@
+====== Chemist Completion Plugin (chemcompletion) ======
+
+---- plugin ----
+description: Inserts a parse button into the toolbar.
+author     : Klaus Boldt
+email      : klaus.boldt@uni-rostock.de
+type       : action
+lastupdate : 2023-11-16
+compatible : 2023-11-16
+depends    : 
+similar    : 
+tags       : button, parse, toolbar
+
+downloadurl: 
+bugtracker: 
+sourcerepo: 
+donationurl: 
+
+screenshot_img : 
+----
+
+===== Installation =====
+
+Search and install the plugin **"chemcompletion"** using the Extension Manager.
+
+or
+
+Install the plugin over the webfrontend by using the url:
+
+https://github.com/...
+
+===== Syntax and Usage =====
+
+After installation you'll find a new button at the end of your regular toolbar. Use it after selection text to complete weighed-in chemicals of the form "NAME (MASS, VOLUME, AMOUNT, MOLAR MASS, DENSITY)" or "NAME (VOLUME, AMOUNT, CONCENTRATION)".
+
+=== Author ===
+  * Klaus Boldt [[https://github.com/user9209/dokuwiki_plugin_codebutton|Plugin on GitHub]]
+
+=== Change Log ===
+  * **2023-11-21**
+    * Plugin created (forked from example projects)	
+
+=== Known Bugs and Issues ===
+
+  * not yet known
