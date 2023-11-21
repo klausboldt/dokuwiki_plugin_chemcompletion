@@ -5,15 +5,15 @@ description: Inserts a parse button into the toolbar.
 author     : Klaus Boldt
 email      : klaus.boldt@uni-rostock.de
 type       : action
-lastupdate : 2023-11-16
-compatible : 2023-11-16
+lastupdate : 2023-11-21
+compatible : 2023-11-21
 depends    : 
 similar    : 
 tags       : button, parse, toolbar
 
 downloadurl: 
-bugtracker: 
-sourcerepo: 
+bugtracker: https://github.com/klausboldt/dokuwiki_plugin_chemcompletion/issues/
+sourcerepo: https://github.com/klausboldt/dokuwiki_plugin_chemcompletion/
 donationurl: 
 
 screenshot_img : 
@@ -27,14 +27,14 @@ or
 
 Install the plugin over the webfrontend by using the url:
 
-https://github.com/...
+https://github.com/klausboldt/dokuwiki_plugin_chemcompletion/
 
 ===== Syntax and Usage =====
 
 After installation you'll find a new button at the end of your regular toolbar. Use it after selection text to complete weighed-in chemicals of the form "NAME (MASS, VOLUME, AMOUNT, MOLAR MASS, DENSITY)" or "NAME (VOLUME, AMOUNT, CONCENTRATION)".
 
 === Author ===
-  * Klaus Boldt [[https://github.com/user9209/dokuwiki_plugin_codebutton|Plugin on GitHub]]
+  * Klaus Boldt [[https://github.com/klausboldt/dokuwiki_plugin_chemcompletion|Plugin on GitHub]]
 
 === Change Log ===
   * **2023-11-21**
