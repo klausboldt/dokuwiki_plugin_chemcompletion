@@ -1,7 +1,7 @@
 base chemcompletion
 author Klaus Boldt
 email  klaus.boldt@uni-rostock.de
-date   2023-11-16
+date   2023-11-21
 name   Chemicals list completion button
 desc   Inserts a parse button into the toolbar.
-url    https://www.dokuwiki.org/plugin:chemcompletion
+url    https://github.com/klausboldt/dokuwiki_plugin_chemcompletion
