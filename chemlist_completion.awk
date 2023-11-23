@@ -10,7 +10,7 @@ BEGIN {
 
 {
     result = "";
-    while (match($0, /[-a-zA-Z0-9,'()]+[[:blank:]]*\(([0-9.]+[[:blank:]]*(µ|u|m)?([glLM]|mol|mol\/[lL]|g\/mol|g\/m[lL]))+(,[[:blank:]]*[0-9.]+[[:blank:]]*(µ|u|m)?([glLM]|mol|mol\/[lL]|g\/mol|g\/m[lL]))*\)/)) {
+    while (match($0, /[-a-zA-Z0-9,'()_₁₂₃₄₅₆₇₈₉₀]+[[:blank:]]*\(([0-9.]+[[:blank:]]*(µ|u|m)?([glLM]|mol|mol\/[lL]|g\/mol|g\/m[lL]))+(,[[:blank:]]*[0-9.]+[[:blank:]]*(µ|u|m)?([glLM]|mol|mol\/[lL]|g\/mol|g\/m[lL]))*\)/)) {
         beginning=substr($0, 1, RSTART-1);
         pattern=substr($0, RSTART, RLENGTH);
         ending=substr($0, RSTART + RLENGTH);
@@ -22,6 +22,7 @@ BEGIN {
             pattern = substr(pattern, 0, RSTART) " " substr(pattern, RSTART + 1, length(pattern));
         z = split(pattern, compound, " ");
         name = compound[1];
+        gsub(/_/, " ", name);
 	    id = tolower(compound[1]);
         for (i = 2; i <= z; i++)
             gsub(/[\(\),]/, "", compound[i]);
