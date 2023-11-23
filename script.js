@@ -15,46 +15,27 @@ function tb_parse(btn, props, edid) {
         text = selection.getText();
         opts = {nosel: true};
         
+        // Split into individual lines
+        var lines = text.split("\n");
+        var numberOfLines = lines.length;
+        if (numberOfLines > 1) {
+            text = "";
+            for (var i = 0; i < numberOfLines; i++) {
+                text = text.concat(parseTextWithScript(lines[i], props.script));
+                if (i != numberOfLines - 1)
+                    text = text.concat("\n");
+            }
+        } else {
+            text = parseTextWithScript(text, props.script);
+        }
+        
         // do it
-        text = parseTextWithScript(text, props.script);
         pasteText(selection, text, opts);
     }
     
     pickerClose();
     return false;
 }
-
-/**
- * Button action for script/replace buttons
- *
- * This works exactly as tb_replace() except that, if multiple lines
- * are selected, each line will be formatted seperately
- *
- * @param  DOMElement btn   Button element to add the action to
- * @param  array      props Associative array of button properties
- * @param  string     edid  ID of the editor textarea
- * @author Klaus Boldt <klaus.boldt@uni-rostock.de>
- */
-/*function tb_parseln(btn, props, edid) {
-    var selection = DWgetSelection(jQuery('#'+edid)[0]);
-    var text, opts;
-
-    // is something selected?
-    if (selection.getLength()) {
-        text = selection.getText();
-        opts = {nosel: true};
-        
-        // do it
-        text = parseTextWithScript(text, props.script);
-        pasteText(selection, text, opts);
-    }
-
-    /*text = text.split("\n").join(props.close+"\n"+props.open);
-    sample = props.open+sample+props.close;*/
-/*
-    pickerClose();
-    return false;
-}*/
 
 
 /**
