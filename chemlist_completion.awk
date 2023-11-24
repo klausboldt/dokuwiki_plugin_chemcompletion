@@ -10,49 +10,66 @@ BEGIN {
 
 {
     result = "";
-    while (match($0, /[-a-zA-Z0-9,'()_₁₂₃₄₅₆₇₈₉₀]+[[:blank:]]*\(([0-9.]+[[:blank:]]*(µ|u|m)?([glLM]|mol|mol\/[lL]|g\/mol|g\/m[lL]))+(,[[:blank:]]*[0-9.]+[[:blank:]]*(µ|u|m)?([glLM]|mol|mol\/[lL]|g\/mol|g\/m[lL]))*\)/)) {
+    while (match($0, /([0-9.]+[[:blank:]]*(µ|u|m)?([glL]|mol)[[:blank:]]+)?[-a-zA-Z0-9,'()_₁₂₃₄₅₆₇₈₉₀]+[[:blank:]]+\(([0-9.]+[[:blank:]]*(µ|u|m)?([glLM]|mol|mol\/[lL]|g\/mol|g\/m[lL]))+(,[[:blank:]]*[0-9.]+[[:blank:]]*(µ|u|m)?([glLM]|mol|mol\/[lL]|g\/mol|g\/m[lL]))*\)/)) {
         beginning=substr($0, 1, RSTART-1);
         pattern=substr($0, RSTART, RLENGTH);
         ending=substr($0, RSTART + RLENGTH);
-        # Insert missing spaces after commas
-        while (match(pattern, /,[0-9]/))
-            pattern = substr(pattern, 0, RSTART) " " substr(pattern, RSTART + 1, length(pattern));
+        # Insert missing spaces after commas, but only after units, not inside a compound name
+        while (match(pattern, /[glL],[0-9]/))
+            pattern = substr(pattern, 1, RSTART) " " substr(pattern, RSTART + 1, length(pattern));
         # Insert missing spaces between values and units
         while (match(pattern, /[0-9][µumglLM]/))
             pattern = substr(pattern, 0, RSTART) " " substr(pattern, RSTART + 1, length(pattern));
         z = split(pattern, compound, " ");
-        name = compound[1];
+        if (match(compound[1], /^[0-9.]+$/) && match(compound[2], /^(µ|u|m)?([glL]|mol)$/)) {
+            start_count = 3;
+            id = tolower(compound[start_count]);
+            if (match(compound[2], /m([glL]|mol)/)) {
+                compound[1] *= 1e-3;
+                compound[2]=substr(compound[2], 2);
+            }
+            if (match(compound[2], /u([glL]|mol)/)) {
+                compound[1] *= 1e-6;
+                compound[2]=substr(compound[2], 2);
+            }
+            if (match(compound[2], /µ([glL]|mol)/)) {
+                compound[1] *= 1e-6;
+                compound[2]=substr(compound[2], 3); # µ is a UTF-8 character
+            }
+            if (compound[2] == "mol") amount[id] = compound[1];
+            if (compound[2] == "g") mass[id] = compound[1];
+            if (compound[2] == "l" || compound[2] == "L") volume[id] = compound[1];
+            firstUnitInList = compound[2];
+        } else {
+            start_count = 1;
+            id = tolower(compound[start_count]);
+        }
+        name = compound[start_count];
         gsub(/_/, " ", name);
-	    id = tolower(compound[1]);
-        for (i = 2; i <= z; i++)
+	    
+        for (i = start_count + 1; i <= z; i++)
             gsub(/[\(\),]/, "", compound[i]);
         
         # Collect all given parameters
-        for (i = 2; i <= z; i += 2) {
-            # Split parameters if no space is inserted between number and unit
-            if (match(compound[i], /([0-9.]+[µum]?([glLM]|mol|mol\/[lL]|g\/mol|g\/m[lL]))+/)) {
-                compound[i+1] = compound[i];
-                gsub(/[[:alpha:]\/]/, "", compound[i]);
-                gsub(/[[:digit:].]/, "", compound[i+1]);
-            }
-            if (match(compound[i+1], /m([glLM]|mol|mol\/[lL]|g\/mol|g\/m[lL])/)) {
+        for (i = start_count + 1; i <= z; i += 2) {
+            if (match(compound[i+1], /^m([glLM]|mol|mol\/[lL]|g\/mol|g\/m[lL])/)) {
                 compound[i] *= 1e-3;
                 compound[i+1]=substr(compound[i+1], 2);
             }
-            if (match(compound[i+1], /u([glLM]|mol|mol\/[lL]|g\/mol|g\/m[lL])/)) {
+            if (match(compound[i+1], /^u([glLM]|mol|mol\/[lL]|g\/mol|g\/m[lL])/)) {
                 compound[i] *= 1e-6;
                 compound[i+1]=substr(compound[i+1], 2);
             }
-            if (match(compound[i+1], /µ([glLM]|mol|mol\/[lL]|g\/mol|g\/m[lL])/)) {
+            if (match(compound[i+1], /^µ([glLM]|mol|mol\/[lL]|g\/mol|g\/m[lL])/)) {
                 compound[i] *= 1e-6;
-                compound[i+1]=substr(compound[i+1], 3); # µ is a UTF-8 character 
+                compound[i+1]=substr(compound[i+1], 3); # µ is a UTF-8 character
             }
             if (compound[i+1] == "mol") amount[id] = compound[i];
             if (compound[i+1] == "g") mass[id] = compound[i];
             if (compound[i+1] == "l" || compound[i+1] == "L") volume[id] = compound[i];
-            if (compound[i+1] == "mol/l" || compound[i+1] == "mol/L" || compound[i+1] == "M") concentration[id] = compound[i];
-            if (compound[i+1] == "g/mol") molarmass[id] = compound[i];
-            if (compound[i+1] == "g/ml" || compound[i+1] == "g/mL") density[id] = compound[i];
+            if ((compound[i+1] == "mol/l" || compound[i+1] == "mol/L" || compound[i+1] == "M") && !concentration[id]) concentration[id] = compound[i];
+            if (compound[i+1] == "g/mol" && !molarmass[id]) molarmass[id] = compound[i];
+            if ((compound[i+1] == "g/ml" || compound[i+1] == "g/mL") && !density[id]) density[id] = compound[i];
             if (i == 2) firstUnitInList = compound[i+1];
         }
 
@@ -170,26 +187,28 @@ BEGIN {
         # Case 2: solution with volume, concentration, molar amount and mass of solute
         output="";
         if (!concentration[id]) {
-            if (mass[id]) output = output mass[id];
-            if (amount[id]) {
-                if (output) output = output ", "; 
+            if (mass[id] && (start_count == 1 || firstUnitInList != "g"))
+                    output = output mass[id];
+            if (amount[id] && (start_count == 1 || firstUnitInList != "mol")) {
+                if (output) output = output ", ";
                 output = output amount[id];
             }
-            if (volume[id]) {
+            if (volume[id] && (start_count == 1 || firstUnitInList != "l")) {
                 if (output) output = output ", ";
                 output = output volume[id];
             }
         } else {
-            if (volume[id]) output = output volume[id];
+            if (volume[id] && (start_count == 1 || firstUnitInList != "l"))
+                output = output volume[id];
             if (concentration[id]) {
                 if (output) output = output ", ";
                 output = output concentration[id];
             }
-            if (amount[id]) {
+            if (amount[id] && (start_count == 1 || firstUnitInList != "mol")) {
                 if (output) output = output ", "; 
                 output = output amount[id];
             }
-            if (mass[id]) {
+            if (mass[id] && (start_count == 1 || firstUnitInList != "g")) {
                 if (output) output = output ", "; 
                 output = output mass[id];
             }
@@ -203,6 +222,14 @@ BEGIN {
             output = output "ρ = " density[id];
         }
         output = name " (" output ")";
+        if (start_count == 3) {
+            if (firstUnitInList == "g")
+                output = mass[id] " " output;
+            else if (firstUnitInList == "l")
+                output = volume[id] " " output;
+            else if (firstUnitInList == "mol")
+                output = amount[id] " " output;
+        }
 	result = result beginning output;
         $0 = ending;
     }
