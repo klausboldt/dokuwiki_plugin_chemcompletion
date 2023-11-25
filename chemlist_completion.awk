@@ -34,7 +34,7 @@ BEGIN {
             }
             if (match(compound[2], /µ([glL]|mol)/)) {
                 compound[1] *= 1e-6;
-                compound[2]=substr(compound[2], 3); # µ is a UTF-8 character
+                compound[2]=substr(compound[2], length("µ") + 1); # µ is a UTF-8 character
             }
             if (compound[2] == "mol") amount[id] = compound[1];
             if (compound[2] == "g") mass[id] = compound[1];

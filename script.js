@@ -48,7 +48,7 @@ function tb_parse(btn, props, edid) {
  * @author Klaus Boldt <klaus.boldt@uni-rostock.de>
  */
 function parseTextWithScript(input, script) {
-	var output = ':-(';
+	var output = '[Failed to run the script!]';
     jQuery.ajax({
        type: "GET",
        async: false,
