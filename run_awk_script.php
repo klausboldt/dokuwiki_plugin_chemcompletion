@@ -4,6 +4,6 @@ if ($_GET) {
 } else {
     $text = $argv[1];
 }
-$command = "echo \"" . $text . "\" | awk -f /volume1/web/chemlist_completion/chemlist_completion.awk";
+$command = "echo \"" . $text . "\" | awk -f /volume1/web/lib/plugins/chemcompletion/chemlist_completion.awk";
 echo exec($command);
 ?>
