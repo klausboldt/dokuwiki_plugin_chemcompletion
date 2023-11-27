@@ -26,15 +26,15 @@ BEGIN {
             id = tolower(compound[start_count]);
             if (match(compound[2], /m([glL]|mol)/)) {
                 compound[1] *= 1e-3;
-                compound[2]=substr(compound[2], 2);
+                compound[2] = substr(compound[2], 2);
             }
             if (match(compound[2], /u([glL]|mol)/)) {
                 compound[1] *= 1e-6;
-                compound[2]=substr(compound[2], 2);
+                compound[2] = substr(compound[2], 2);
             }
             if (match(compound[2], /µ([glL]|mol)/)) {
                 compound[1] *= 1e-6;
-                compound[2]=substr(compound[2], length("µ") + 1); # µ is a UTF-8 character
+                compound[2] = substr(compound[2], length("µ") + 1); # µ is a multi-byte UTF-8 character
             }
             if (compound[2] == "mol") amount[id] = compound[1];
             if (compound[2] == "g") mass[id] = compound[1];
@@ -72,6 +72,7 @@ BEGIN {
             if ((compound[i+1] == "g/ml" || compound[i+1] == "g/mL") && !density[id]) density[id] = compound[i];
             if (i == 2) firstUnitInList = compound[i+1];
         }
+        if (firstUnitInList == "L") firstUnitInList = "l"
 
         # Values may be contradictory, i.e. "compound (x g, y ml)" with non-matching values
         # If it can be verified that the values don't match (i.e., molar mass and/or density is known),
@@ -188,7 +189,7 @@ BEGIN {
         output="";
         if (!concentration[id]) {
             if (mass[id] && (start_count == 1 || firstUnitInList != "g"))
-                    output = output mass[id];
+                output = output mass[id];
             if (amount[id] && (start_count == 1 || firstUnitInList != "mol")) {
                 if (output) output = output ", ";
                 output = output amount[id];
@@ -225,13 +226,19 @@ BEGIN {
         if (start_count == 3) {
             if (firstUnitInList == "g")
                 output = mass[id] " " output;
-            else if (firstUnitInList == "l")
+            else if (firstUnitInList == "l" || firstUnitInList == "L")
                 output = volume[id] " " output;
             else if (firstUnitInList == "mol")
                 output = amount[id] " " output;
         }
-	result = result beginning output;
+	    result = result beginning output;
         $0 = ending;
+        # Unset all variables for that compound except for molar mass and density
+        mass[id] = "";
+        volume[id] = "";
+        amount[id] = "";
+        concentration[id] = "";
+        firstUnitInList = "";
     }
     if (result == "")
         result = $0;
