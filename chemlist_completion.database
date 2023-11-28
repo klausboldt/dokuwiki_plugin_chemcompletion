@@ -53,9 +53,12 @@ indium_acetate                   291.95
 In_acetate                       291.95
 In(AcO)₃                         291.95
 In(AcO)3                         291.95
+KOH                              56.1056
+potassium_hydroxide              56.1056
 methanol                         32.04           0.792 
 MeOH                             32.04           0.792 
 NaOH                             39.997
+sodium_hydroxide                 39.997
 ODE                              252.486         0.789
 octadecene                       252.486         0.789
 1-octadecene                     252.486         0.789
@@ -66,6 +69,7 @@ OA                               282.46          0.89
 oleic_acid                       282.46          0.89
 OAm                              267.50          0.813
 oleylamine                       267.50          0.813
+rhodamin_6G                      479.02
 selenium                         78.971
 selenium_powder                  78.971
 selenium_shot                    78.971
