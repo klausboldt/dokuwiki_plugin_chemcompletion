@@ -53,6 +53,7 @@ BEGIN {
         
         # Collect all given parameters
         for (i = start_count + 1; i <= z; i += 2) {
+            compound[i] *= 1; # This is a fix to eliminate leading zeros that turn, e.g., "05.5 g" into "5.5e+03 mg"
             if (match(compound[i+1], /^m([glLM]|mol|mol\/[lL]|g\/mol|g\/m[lL])/)) {
                 compound[i] *= 1e-3;
                 compound[i+1]=substr(compound[i+1], 2);
@@ -63,7 +64,7 @@ BEGIN {
             }
             if (match(compound[i+1], /^µ([glLM]|mol|mol\/[lL]|g\/mol|g\/m[lL])/)) {
                 compound[i] *= 1e-6;
-                compound[i+1]=substr(compound[i+1], 3); # µ is a UTF-8 character
+                compound[i+1]=substr(compound[i+1], length("µ") + 1); # µ is a multi-byte UTF-8 character
             }
             if (compound[i+1] == "mol") amount[id] = compound[i];
             if (compound[i+1] == "g") mass[id] = compound[i];
