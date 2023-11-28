@@ -10,7 +10,8 @@ BEGIN {
 
 {
     result = "";
-    while (match($0, /([0-9.]+[[:blank:]]*(µ|u|m)?([glL]|mol)[[:blank:]]+)?[-a-zA-Z0-9,'()_₁₂₃₄₅₆₇₈₉₀]+[[:blank:]]+\(([0-9.]+[[:blank:]]*(µ|u|m)?([glLM]|mol|mol\/[lL]|g\/mol|g\/m[lL]))+(,[[:blank:]]*[0-9.]+[[:blank:]]*(µ|u|m)?([glLM]|mol|mol\/[lL]|g\/mol|g\/m[lL]))*\)/)) {
+    # Match either "[value unit] name (value unit, [value unit, ...])" or "value unit name [(value unit, ...)]"
+    while (match($0, /([0-9.]+[[:blank:]]*(µ|u|m)?([glL]|mol)[[:blank:]]+)?[-a-zA-Z0-9,'()_₁₂₃₄₅₆₇₈₉₀]+[[:blank:]]+\(([0-9.]+[[:blank:]]*(µ|u|m)?([glLM]|mol|mol\/[lL]|g\/mol|g\/m[lL]))+(,[[:blank:]]*[0-9.]+[[:blank:]]*(µ|u|m)?([glLM]|mol|mol\/[lL]|g\/mol|g\/m[lL]))*\)/) || match($0, /([0-9.]+[[:blank:]]*(µ|u|m)?([glL]|mol)[[:blank:]]+)[-a-zA-Z0-9,'()_₁₂₃₄₅₆₇₈₉₀]+([[:blank:]]+\(([0-9.]+[[:blank:]]*(µ|u|m)?([glLM]|mol|mol\/[lL]|g\/mol|g\/m[lL]))+(,[[:blank:]]*[0-9.]+[[:blank:]]*(µ|u|m)?([glLM]|mol|mol\/[lL]|g\/mol|g\/m[lL]))*\))?/)) {
         beginning=substr($0, 1, RSTART-1);
         pattern=substr($0, RSTART, RLENGTH);
         ending=substr($0, RSTART + RLENGTH);
@@ -222,7 +223,10 @@ BEGIN {
             if (output) output = output ", "; 
             output = output "ρ = " density[id];
         }
-        output = name " (" output ")";
+        if (output != "")
+            output = name " (" output ")";
+        else
+            output = name;
         if (start_count == 3) {
             if (firstUnitInList == "g")
                 output = mass[id] " " output;
