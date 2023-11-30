@@ -11,7 +11,7 @@ BEGIN {
 {
     result = "";
     # Match either "[value unit] name (value unit, [value unit, ...])" or "value unit name [(value unit, ...)]"
-    while (match($0, /([0-9.]+[[:blank:]]*(µ|u|m)?([glL]|mol)[[:blank:]]+)?[-a-zA-Z0-9,'()_₁₂₃₄₅₆₇₈₉₀]+[[:blank:]]+\(([0-9.]+[[:blank:]]*(µ|u|m)?([glLM]|mol|mol\/[lL]|g\/mol|g\/m[lL]))+(,[[:blank:]]*[0-9.]+[[:blank:]]*(µ|u|m)?([glLM]|mol|mol\/[lL]|g\/mol|g\/m[lL]))*\)/) || match($0, /([0-9.]+[[:blank:]]*(µ|u|m)?([glL]|mol)[[:blank:]]+)[-a-zA-Z0-9,'()_₁₂₃₄₅₆₇₈₉₀]+([[:blank:]]+\(([0-9.]+[[:blank:]]*(µ|u|m)?([glLM]|mol|mol\/[lL]|g\/mol|g\/m[lL]))+(,[[:blank:]]*[0-9.]+[[:blank:]]*(µ|u|m)?([glLM]|mol|mol\/[lL]|g\/mol|g\/m[lL]))*\))?/)) {
+    while (match($0, /([0-9.]+[[:blank:]]*(µ|u|m)?([glL]|mol)[[:blank:]]+)?[-a-zA-Z0-9,'()_₁₂₃₄₅₆₇₈₉₀·]+[[:blank:]]+\(([0-9.]+[[:blank:]]*(µ|u|m)?([glLM]|mol|mol\/[lL]|g\/mol|g\/m[lL]))+(,[[:blank:]]*[0-9.]+[[:blank:]]*(µ|u|m)?([glLM]|mol|mol\/[lL]|g\/mol|g\/m[lL]))*\)/) || match($0, /([0-9.]+[[:blank:]]*(µ|u|m)?([glL]|mol)[[:blank:]]+)[-a-zA-Z0-9,'()_₁₂₃₄₅₆₇₈₉₀·]+([[:blank:]]+\(([0-9.]+[[:blank:]]*(µ|u|m)?([glLM]|mol|mol\/[lL]|g\/mol|g\/m[lL]))+(,[[:blank:]]*[0-9.]+[[:blank:]]*(µ|u|m)?([glLM]|mol|mol\/[lL]|g\/mol|g\/m[lL]))*\))?/)) {
         beginning=substr($0, 1, RSTART-1);
         pattern=substr($0, RSTART, RLENGTH);
         ending=substr($0, RSTART + RLENGTH);
@@ -53,18 +53,18 @@ BEGIN {
         
         # Collect all given parameters
         for (i = start_count + 1; i <= z; i += 2) {
-            compound[i] *= 1; # This is a fix to eliminate leading zeros that turn, e.g., "05.5 g" into "5.5e+03 mg"
             if (match(compound[i+1], /^m([glLM]|mol|mol\/[lL]|g\/mol|g\/m[lL])/)) {
                 compound[i] *= 1e-3;
                 compound[i+1]=substr(compound[i+1], 2);
-            }
-            if (match(compound[i+1], /^u([glLM]|mol|mol\/[lL]|g\/mol|g\/m[lL])/)) {
+            } else if (match(compound[i+1], /^u([glLM]|mol|mol\/[lL]|g\/mol|g\/m[lL])/)) {
                 compound[i] *= 1e-6;
                 compound[i+1]=substr(compound[i+1], 2);
-            }
-            if (match(compound[i+1], /^µ([glLM]|mol|mol\/[lL]|g\/mol|g\/m[lL])/)) {
+            } else if (match(compound[i+1], /^µ([glLM]|mol|mol\/[lL]|g\/mol|g\/m[lL])/)) {
                 compound[i] *= 1e-6;
                 compound[i+1]=substr(compound[i+1], length("µ") + 1); # µ is a multi-byte UTF-8 character
+            } else {
+                compound[i] *= 1;
+                # This is a fix to eliminate leading zeros that turn, e.g., "05.5 g" into "5.5e+03 mg"
             }
             if (compound[i+1] == "mol") amount[id] = compound[i];
             if (compound[i+1] == "g") mass[id] = compound[i];
@@ -238,6 +238,7 @@ BEGIN {
         }
 	    result = result beginning output;
         $0 = ending;
+
         # Unset all variables for that compound except for molar mass and density
         mass[id] = "";
         volume[id] = "";

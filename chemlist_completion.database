@@ -1,104 +1,104 @@
-acetone                          58.080          0.7845
-dimethyl_ketone                  58.080          0.7845
-propanone                        58.080          0.7845
-2-propanone                      58.080          0.7845
-auric_chloride_trihydrate        393.83
-tetrachloroauric_acid_trihydrate 393.83
-HAuCl₄·3H₂O                      393.83
-HAuCl4·3H2O                      393.83
-cadmium_acetate                  230.500
-Cd_acetate                       230.500
-Cd(AcO)₂                         230.500
-Cd(AcO)2                         230.500
-cadmium_acetate_dihydrate        266.529
-Cd_acetate_dihydrate             266.529
-Cd(AcO)₂·2H₂O                    266.529
-Cd(AcO)2·2H2O                    266.529
-cadmium_nitrate_tetrahydrate     308.47
-Cd_nitrate_tetrahydrate          308.47
-Cd(NO₃)₂·4H₂O                    308.47
-Cd(NO3)2·4H2O                    308.47
-cadmium_oxide                    128.4112
-Cd_oxide                         128.4112
-CdO                              128.4112
-chloroform                       119.37          1.489
-trichloromethane                 119.37          1.489
-copper(I)_iodide                 190.45
-CuI                              190.45
-dichloromethane                  84.93           1.3266
-DCM                              84.93           1.3266
-dodecanethiol                    202.39          0.85
-1-dodecanethiol                  202.39          0.85
-dodecyl_mercaptan                202.39          0.85
-n-dodecyl_mercaptan              202.39          0.85
-DDT                              202.39          0.85
-decylphosphonic acid             222.26 
-n-decylphosphonic acid           222.26
-dodecylphosphonic acid           250.31
-n-dodecylphosphonic acid         250.31
-ethanol                          46.08           0.78945
-EtOH                             46.08           0.78945
-hexadecanediol                   258.44
-1,2-hexadecanediol               258.44
-hexadecane-1,2-diol              258.44
-n-hexadecylamin                  241.46
-hexadecylamin                    241.46
-HDA                              241.46
-n-hexane                         86.18           0.6603
-hexane                           86.18           0.6603
-hexylphosphonic acid             166.16 
-n-hexylphosphonic acid           166.16
-HPA                              166.16
-indium_acetate                   291.95
-In_acetate                       291.95
-In(AcO)₃                         291.95
-In(AcO)3                         291.95
-KOH                              56.1056
-potassium_hydroxide              56.1056
-methanol                         32.04           0.792 
-MeOH                             32.04           0.792 
-NaOH                             39.997
-sodium_hydroxide                 39.997
-ODE                              252.486         0.789
-octadecene                       252.486         0.789
-1-octadecene                     252.486         0.789
-octanethiol                      146.29          0.843
-1-octanethiol                    146.29          0.843
-octane-1-thiol                   146.29          0.843
-OA                               282.46          0.89
-oleic_acid                       282.46          0.89
-OAm                              267.50          0.813
-oleylamine                       267.50          0.813
-rhodamin_6G                      479.02
-selenium                         78.971
-selenium_powder                  78.971
-selenium_shot                    78.971
-Se                               78.971
-Se_powder                        78.971
-Se_shot                          78.971
-sulfur                           32.06
-sulphur                          32.06
-S                                32.06
-TBP                              202.32          0.817
-tributylphosphine                202.32          0.817
-tri-n-butylphosphine             202.32          0.817
-tellurium                        127.6 
-tellurium_powder                 127.6
-tellurium_shot                   127.6
-Te                               127.6 
-Te_powder                        127.6
-Te_shot                          127.6
+acetone                                             58.080          0.7845
+dimethyl_ketone                                     58.080          0.7845
+propanone                                           58.080          0.7845
+2-propanone                                         58.080          0.7845
+auric_chloride_trihydrate                           393.83
+tetrachloroauric_acid_trihydrate                    393.83
+HAuCl₄·3H₂O                                         393.83
+HAuCl4·3H2O                                         393.83
+cadmium_acetate                                     230.500
+Cd_acetate                                          230.500
+Cd(AcO)₂                                            230.500
+Cd(AcO)2                                            230.500
+cadmium_acetate_dihydrate                           266.529
+Cd_acetate_dihydrate                                266.529
+Cd(AcO)₂·2H₂O                                       266.529
+Cd(AcO)2·2H2O                                       266.529
+cadmium_nitrate_tetrahydrate                        308.47
+Cd_nitrate_tetrahydrate                             308.47
+Cd(NO₃)₂·4H₂O                                       308.47
+Cd(NO3)2·4H2O                                       308.47
+cadmium_oxide                                       128.4112
+Cd_oxide                                            128.4112
+CdO                                                 128.4112
+chloroform                                          119.37          1.489
+trichloromethane                                    119.37          1.489
+copper(I)_iodide                                    190.45
+CuI                                                 190.45
+dichloromethane                                     84.93           1.3266
+DCM                                                 84.93           1.3266
+dodecanethiol                                       202.39          0.85
+1-dodecanethiol                                     202.39          0.85
+dodecyl_mercaptan                                   202.39          0.85
+n-dodecyl_mercaptan                                 202.39          0.85
+DDT                                                 202.39          0.85
+decylphosphonic acid                                222.26 
+n-decylphosphonic acid                              222.26
+dodecylphosphonic acid                              250.31
+n-dodecylphosphonic acid                            250.31
+ethanol                                             46.08           0.78945
+EtOH                                                46.08           0.78945
+hexadecanediol                                      258.44
+1,2-hexadecanediol                                  258.44
+hexadecane-1,2-diol                                 258.44
+n-hexadecylamin                                     241.46
+hexadecylamin                                       241.46
+HDA                                                 241.46
+n-hexane                                            86.18           0.6603
+hexane                                              86.18           0.6603
+hexylphosphonic acid                                166.16 
+n-hexylphosphonic acid                              166.16
+HPA                                                 166.16
+indium_acetate                                      291.95
+In_acetate                                          291.95
+In(AcO)₃                                            291.95
+In(AcO)3                                            291.95
+KOH                                                 56.1056
+potassium_hydroxide                                 56.1056
+methanol                                            32.04           0.792 
+MeOH                                                32.04           0.792 
+NaOH                                                39.997
+sodium_hydroxide                                    39.997
+ODE                                                 252.486         0.789
+octadecene                                          252.486         0.789
+1-octadecene                                        252.486         0.789
+octanethiol                                         146.29          0.843
+1-octanethiol                                       146.29          0.843
+octane-1-thiol                                      146.29          0.843
+OA                                                  282.46          0.89
+oleic_acid                                          282.46          0.89
+OAm                                                 267.50          0.813
+oleylamine                                          267.50          0.813
+rhodamin_6G                                         479.02
+selenium                                            78.971
+selenium_powder                                     78.971
+selenium_shot                                       78.971
+Se                                                  78.971
+Se_powder                                           78.971
+Se_shot                                             78.971
+sulfur                                              32.06
+sulphur                                             32.06
+S                                                   32.06
+TBP                                                 202.32          0.817
+tributylphosphine                                   202.32          0.817
+tri-n-butylphosphine                                202.32          0.817
+tellurium                                           127.6 
+tellurium_powder                                    127.6
+tellurium_shot                                      127.6
+Te                                                  127.6 
+Te_powder                                           127.6
+Te_shot                                             127.6
 Tetrakis(acetonitrile)copper(I)_hexafluorophosphate 372.72
-[Cu(MeCN)₄]PF₆                   372.72
-[Cu(MeCN)4]PF6                   372.72
-[Cu(CH₃CN)₄]PF₆                  372.72
-[Cu(CH3CN)4]PF6                  372.72
-[Cu(H₃CCN)₄]PF₆                  372.72
-[Cu(H3CCN)4]PF6                  372.72
-toluene	                         92.14           0.86696
-TOP                              370.64          0.831
-trioctylphosphine                370.64          0.831
-tri-n-octylphosphine             370.64          0.831
-TOPO                             386.63
-trioctylphosphine_oxide          386.63
-tri-n-octylphosphine_oxide       386.63
+[Cu(MeCN)₄]PF₆                                      372.72
+[Cu(MeCN)4]PF6                                      372.72
+[Cu(CH₃CN)₄]PF₆                                     372.72
+[Cu(CH3CN)4]PF6                                     372.72
+[Cu(H₃CCN)₄]PF₆                                     372.72
+[Cu(H3CCN)4]PF6                                     372.72
+toluene	                                            92.14           0.86696
+TOP                                                 370.64          0.831
+trioctylphosphine                                   370.64          0.831
+tri-n-octylphosphine                                370.64          0.831
+TOPO                                                386.63
+trioctylphosphine_oxide                             386.63
+tri-n-octylphosphine_oxide                          386.63

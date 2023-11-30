@@ -7,18 +7,18 @@
  * @author Klaus Boldt <klaus.boldt@uni-rostock.de>
  */
 
-if (!defined('DOKU_INC')) die();
-if (!defined('DOKU_PLUGIN')) define('DOKU_PLUGIN', DOKU_INC . 'lib/plugins/');
-require_once (DOKU_PLUGIN . 'action.php');
+use dokuwiki\Extension\ActionPlugin;
+use dokuwiki\Extension\EventHandler;
+use dokuwiki\Extension\Event;
  
-class action_plugin_chemcompletion extends DokuWiki_Action_Plugin {
+class action_plugin_chemcompletion extends ActionPlugin {
 
     /**
      * Register the event handlers
      *
      * @param Doku_Event_Handler $controller DokuWiki's event controller object
      */
-    function register(Doku_Event_Handler $controller) {
+    function register(EventHandler $controller) {
         $controller->register_hook('TOOLBAR_DEFINE', 'AFTER', $this, 'insert_button', array ());
     }
  
@@ -36,6 +36,12 @@ class action_plugin_chemcompletion extends DokuWiki_Action_Plugin {
             'title' => $this->getLang('completechemlist'),
             'icon' => '../../plugins/chemcompletion/image/chemlist.png',
             'script' => '/lib/plugins/chemcompletion/run_awk_script.php',
+        );
+        $event->data[] = array (
+            'type' => 'editdatabase',
+            'title' => $this->getLang('editchemlistdatabase'),
+            'icon' => '../../plugins/chemcompletion/image/chemlist_database.png',
+            'file' => '/lib/plugins/chemcompletion/chemlist_completion.database',
         );
     }
 }

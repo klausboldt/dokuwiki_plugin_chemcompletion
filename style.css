@@ -1,0 +1,73 @@
+/* modal windows */
+.JSpopup,
+#edit__database {
+    position: absolute;
+    background-color: #fff;
+    color: #000;
+    z-index: 20;
+    overflow: hidden;
+    display: none;
+}
+
+#edit__database .ui-dialog-content {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+[dir=rtl] #edit__database_close {
+    float: left;
+}
+
+#edit__database_result {
+    background-color: @ini_background;
+    width:  293px;
+    height: 193px;
+    overflow: auto;
+    border: 1px solid @ini_border;
+    margin: 3px auto;
+    text-align: left;
+    line-height: 1;
+}
+[dir=rtl] #edit__database_result {
+    text-align: right;
+}
+
+#edit__database_result div {
+    padding: 3px 3px 3px 0;
+}
+
+#edit__database_result div a {
+    display: block;
+    padding-left: 22px;
+    min-height: 16px;
+    background: transparent 3px center no-repeat;
+}
+[dir=rtl] #edit__database_result div a {
+    padding: 3px 22px 3px 3px;
+    background-position: 257px 3px;
+}
+
+#edit__database_result div.type_u a {
+    background-image: url(../../images/up.png);
+}
+#edit__database_result div.type_f a {
+    background-image: url(../../images/page.png);
+}
+#edit__database_result div.type_d a {
+    background-image: url(../../images/ns.png);
+}
+
+#edit__database_result div.even {
+    background-color: @ini_background_neu;
+}
+
+#edit__database_result div.selected {
+    background-color: @ini_background_alt;
+}
+
+#edit__database_result span {
+    display: block;
+    color: @ini_text_neu;
+    margin-left: 22px;
+}
+
