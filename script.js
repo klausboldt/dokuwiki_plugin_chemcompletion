@@ -177,7 +177,6 @@ var dw_editdatabase = {
                 data: output,
             },
             success: function(result) {
-                alert(output);
                 dw_editdatabase.hide();
             },
             error: function(result) {
