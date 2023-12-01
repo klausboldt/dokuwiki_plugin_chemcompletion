@@ -5,7 +5,7 @@ description: Inserts a parse button into the toolbar.
 author     : Klaus Boldt
 email      : klaus.boldt@uni-rostock.de
 type       : action
-lastupdate : 2023-11-21
+lastupdate : 2023-11-30
 compatible : 2023-11-21
 depends    : 
 similar    : 
@@ -25,7 +25,7 @@ Search and install the plugin **"chemcompletion"** using the Extension Manager.
 
 or
 
-Install the plugin over the webfrontend by using the url:
+Install the plugin over the web frontend by using the url:
 
 https://github.com/klausboldt/dokuwiki_plugin_chemcompletion/
 
@@ -38,8 +38,15 @@ After installation you'll find a new button at the end of your regular toolbar. 
 
 === Change Log ===
   * **2023-11-21**
-    * Plugin created (forked from example projects)	
+    * Plugin created (forked from example projects)
+  * **2023-11-30**
+    * Included a toolbar button to edit the database file	
 
 === Known Bugs and Issues ===
 
-  * not yet known
+  * A leading zero (05.5) is converted to exponential form (5e+03) with some versions of awk
+  * The symbols for molar mass ("M = ") and density ("ρ = ") that the script inserts are not recognised or interpreted correctly when included in the input
+  * Spaces after a pattern in a sentence are cut
+  * A "value unit name" pattern without parentheses is not parsed if followed by a pattern that includes parentheses
+  * The compound name must not include blanks, but underscores are translated to spaces as a work-around
+  * No protection of the database file against editing or malicious attack exists

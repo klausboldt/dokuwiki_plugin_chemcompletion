@@ -22,6 +22,7 @@ BEGIN {
         while (match(pattern, /[0-9][µumglLM]/))
             pattern = substr(pattern, 0, RSTART) " " substr(pattern, RSTART + 1, length(pattern));
         z = split(pattern, compound, " ");
+        # Check if there is a leading value/unit in front of the compound name
         if (match(compound[1], /^[0-9.]+$/) && match(compound[2], /^(µ|u|m)?([glL]|mol)$/)) {
             start_count = 3;
             id = tolower(compound[start_count]);
@@ -48,6 +49,7 @@ BEGIN {
         name = compound[start_count];
         gsub(/_/, " ", name);
 	    
+        # Remove parentheses and commas from the string to process the fields
         for (i = start_count + 1; i <= z; i++)
             gsub(/[\(\),]/, "", compound[i]);
         
@@ -231,7 +233,7 @@ BEGIN {
         if (start_count == 3) {
             if (firstUnitInList == "g")
                 output = mass[id] " " output;
-            else if (firstUnitInList == "l" || firstUnitInList == "L")
+            else if (firstUnitInList == "l")
                 output = volume[id] " " output;
             else if (firstUnitInList == "mol")
                 output = amount[id] " " output;

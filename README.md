@@ -6,7 +6,7 @@ The plugin adds a toolar button to the DokuWiki editor that takes a selected tex
 The input needs to be of the form
 
 ```
-[value unit ] name_of_a_chemical (mass unit, [volume unit, amount unit, ...])
+[value unit ] name_of_a_chemical [(mass unit, [volume unit, amount unit, ...])]
 ```
 
 in which all quantities have a numerical value and a unit. These can be `g`, `mg`, or `µg` for mass, `l`, `L`, `ml`, `mL`, `µl`, or `µL` for volume, `mol`, `mmol`, or `µmol` for amount, `g/mol`, `mg/mol`, or `µg/mol` for molar mass, and `g/ml` or `g/mL` for density, and `mol/l` or `mol/L` for concentration.
