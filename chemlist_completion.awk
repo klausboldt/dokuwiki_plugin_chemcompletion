@@ -11,10 +11,17 @@ BEGIN {
 {
     result = "";
     # Match either "[value unit] name (value unit, [value unit, ...])" or "value unit name [(value unit, ...)]"
-    while (match($0, /([0-9.]+[[:blank:]]*(µ|u|m)?([glL]|mol)[[:blank:]]+)?[-a-zA-Z0-9,'()_₁₂₃₄₅₆₇₈₉₀·]+[[:blank:]]+\(([0-9.]+[[:blank:]]*(µ|u|m)?([glLM]|mol|mol\/[lL]|g\/mol|g\/m[lL]))+(,[[:blank:]]*[0-9.]+[[:blank:]]*(µ|u|m)?([glLM]|mol|mol\/[lL]|g\/mol|g\/m[lL]))*\)/) || match($0, /([0-9.]+[[:blank:]]*(µ|u|m)?([glL]|mol)[[:blank:]]+)[-a-zA-Z0-9,'()_₁₂₃₄₅₆₇₈₉₀·]+([[:blank:]]+\(([0-9.]+[[:blank:]]*(µ|u|m)?([glLM]|mol|mol\/[lL]|g\/mol|g\/m[lL]))+(,[[:blank:]]*[0-9.]+[[:blank:]]*(µ|u|m)?([glLM]|mol|mol\/[lL]|g\/mol|g\/m[lL]))*\))?/)) {
-        beginning=substr($0, 1, RSTART-1);
+    # The case of no leading "value unit" and no trailing "(...)" is present,
+    while (match($0, /([0-9.]+[[:blank:]]*(µ|u|m)?([glL]|mol)[[:blank:]]+)?[-a-zA-Z0-9,'()_₁₂₃₄₅₆₇₈₉₀·]+([[:blank:]]+\(([0-9.]+[[:blank:]]*(µ|u|m)?([glLM]|mol|mol\/[lL]|g\/mol|g\/m[lL]))+(,[[:blank:]]*[0-9.]+[[:blank:]]*(µ|u|m)?([glLM]|mol|mol\/[lL]|g\/mol|g\/m[lL]))*\))?/)) {
+        beginning=substr($0, 1, RSTART - 1);
         pattern=substr($0, RSTART, RLENGTH);
         ending=substr($0, RSTART + RLENGTH);
+        print "[" beginning "|" pattern "|" ending "]";
+       # if (!match(pattern, /^[0-9.]+[[:blank:]]*(µ|u|m)?([glL]|mol)/) && !match(pattern, /\(.*\)$/)) {
+       #     split($0, words, " ");
+       # result = result words[1] " ";
+       # $0 = substr($0, length(words[1]) + 2);
+       #} else {
         # Insert missing spaces after commas, but only after units, not inside a compound name
         while (match(pattern, /[glL],[0-9]/))
             pattern = substr(pattern, 1, RSTART) " " substr(pattern, RSTART + 1, length(pattern));
@@ -240,13 +247,14 @@ BEGIN {
         }
 	    result = result beginning output;
         $0 = ending;
-
+        
         # Unset all variables for that compound except for molar mass and density
         mass[id] = "";
         volume[id] = "";
         amount[id] = "";
         concentration[id] = "";
         firstUnitInList = "";
+       #}
     }
     if (result == "")
         result = $0;
