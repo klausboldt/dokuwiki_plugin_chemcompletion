@@ -12,16 +12,10 @@ BEGIN {
     result = "";
     # Match either "[value unit] name (value unit, [value unit, ...])" or "value unit name [(value unit, ...)]"
     # The case of no leading "value unit" and no trailing "(...)" is present,
-    while (match($0, /([0-9.]+[[:blank:]]*(µ|u|m)?([glL]|mol)[[:blank:]]+)?[-a-zA-Z0-9,'()_₁₂₃₄₅₆₇₈₉₀·]+([[:blank:]]+\(([0-9.]+[[:blank:]]*(µ|u|m)?([glLM]|mol|mol\/[lL]|g\/mol|g\/m[lL]))+(,[[:blank:]]*[0-9.]+[[:blank:]]*(µ|u|m)?([glLM]|mol|mol\/[lL]|g\/mol|g\/m[lL]))*\))?/)) {
+    while (match($0, /([0-9.]+[[:blank:]]*(µ|u|m)?([glL]|mol)[[:blank:]]+)?(of[[:blank:]])?[-a-zA-Z0-9,'()_<>\/\*₁₂₃₄₅₆₇₈₉₀·]+([[:blank:]]+\(([0-9.]+[[:blank:]]*(µ|u|m)?([glLM]|mol|mol\/[lL]|g\/mol|g\/m[lL]))+(,[[:blank:]]*[0-9.]+[[:blank:]]*(µ|u|m)?([glLM]|mol|mol\/[lL]|g\/mol|g\/m[lL]))*\))?/)) {
         beginning=substr($0, 1, RSTART - 1);
         pattern=substr($0, RSTART, RLENGTH);
         ending=substr($0, RSTART + RLENGTH);
-        print "[" beginning "|" pattern "|" ending "]";
-       # if (!match(pattern, /^[0-9.]+[[:blank:]]*(µ|u|m)?([glL]|mol)/) && !match(pattern, /\(.*\)$/)) {
-       #     split($0, words, " ");
-       # result = result words[1] " ";
-       # $0 = substr($0, length(words[1]) + 2);
-       #} else {
         # Insert missing spaces after commas, but only after units, not inside a compound name
         while (match(pattern, /[glL],[0-9]/))
             pattern = substr(pattern, 1, RSTART) " " substr(pattern, RSTART + 1, length(pattern));
@@ -31,7 +25,7 @@ BEGIN {
         z = split(pattern, compound, " ");
         # Check if there is a leading value/unit in front of the compound name
         if (match(compound[1], /^[0-9.]+$/) && match(compound[2], /^(µ|u|m)?([glL]|mol)$/)) {
-            start_count = 3;
+            start_count = (compound[3] == "of") ? 4 : 3;
             id = tolower(compound[start_count]);
             if (match(compound[2], /m([glL]|mol)/)) {
                 compound[1] *= 1e-3;
@@ -90,7 +84,7 @@ BEGIN {
         # treat the first listed as correct and replace the other values
         if (firstUnitInList == "g") {
             if (density[id])
-                if (volume[id] != mass[id] / density[id]) volume[id] = "";
+                if (volume[id] != mass[id] / density[id] * 1e-3) volume[id] = "";
             if (molarmass[id])
                 if (amount[id] != mass[id] / molarmass[id]) amount[id] = "";
         } else if (firstUnitInList == "l") {
@@ -102,7 +96,7 @@ BEGIN {
             if (molarmass[id])
                 if (mass[id] != amount[id] * molarmass[id]) mass[id] = "";
             if (density[id])
-                if (volume[id] != mass[id] / density[id]) volume[id] = "";
+                if (volume[id] != mass[id] / density[id] * 1e-3) volume[id] = "";
         }
     
         # Complete the list using the known parameters
@@ -110,7 +104,7 @@ BEGIN {
             if (molarmass[id] && amount[id]) { 
                 mass[id] = amount[id] * molarmass[id];
             } else if (density[id] && volume[id]) { 
-                mass[id] = density[id] * volume[id];
+                mass[id] = density[id] * volume[id] / 1e-3;
             }
         }
         if (!amount[id]) {
@@ -122,7 +116,7 @@ BEGIN {
         }
         if (!volume[id]) {
             if (density[id] && mass[id]) {
-                volume[id] = mass[id] / density[id];
+                volume[id] = mass[id] / density[id] * 1e-3;
             }
         }
     
@@ -237,13 +231,17 @@ BEGIN {
             output = name " (" output ")";
         else
             output = name;
-        if (start_count == 3) {
+        if (start_count >= 3) {
+            if (start_count == 4)
+                preposition = "of ";
+            else
+                preposition = "";
             if (firstUnitInList == "g")
-                output = mass[id] " " output;
+                output = mass[id] " " preposition output;
             else if (firstUnitInList == "l")
-                output = volume[id] " " output;
+                output = volume[id] " " preposition output;
             else if (firstUnitInList == "mol")
-                output = amount[id] " " output;
+                output = amount[id] " " preposition output;
         }
 	    result = result beginning output;
         $0 = ending;
@@ -254,7 +252,6 @@ BEGIN {
         amount[id] = "";
         concentration[id] = "";
         firstUnitInList = "";
-       #}
     }
     if (result == "")
         result = $0;

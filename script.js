@@ -15,6 +15,9 @@ function tb_parse(btn, props, edid) {
         text = selection.getText();
         opts = {nosel: true};
         
+        // Preserve newline indicators (double backslash)
+        text = text.replace(/\\/g, "\\\\");
+        
         // Split into individual lines
         var lines = text.split("\n");
         var numberOfLines = lines.length;

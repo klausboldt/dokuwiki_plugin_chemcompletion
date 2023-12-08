@@ -5,7 +5,7 @@ description: Inserts a parse button into the toolbar.
 author     : Klaus Boldt
 email      : klaus.boldt@uni-rostock.de
 type       : action
-lastupdate : 2023-11-30
+lastupdate : 2023-12-08
 compatible : 2023-11-21
 depends    : 
 similar    : 
@@ -47,6 +47,5 @@ After installation you'll find a new button at the end of your regular toolbar. 
   * A leading zero (05.5) is converted to exponential form (5e+03) with some versions of awk
   * The symbols for molar mass ("M = ") and density ("ρ = ") that the script inserts are not recognised or interpreted correctly when included in the input
   * Spaces after a pattern in a sentence are cut
-  * A "value unit name" pattern without parentheses is not parsed if followed by a pattern that includes parentheses
   * The compound name must not include blanks, but underscores are translated to spaces as a work-around
   * No protection of the database file against editing or malicious attack exists
